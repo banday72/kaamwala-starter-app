@@ -1,0 +1,23 @@
+// KaamWala — Database schema (simplified for the current MVP demo)
+// This only models Bookings for now, matching what the app already collects.
+// Once you add login, workers, and payments, expand this using the full
+// schema.prisma from the PRD package as a reference.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id             String   @id @default(cuid())
+  categorySlug   String
+  address        String
+  description    String?
+  status         String   @default("requested")
+  suggestedPrice Int
+  createdAt      DateTime @default(now())
+}

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
@@ -9,6 +10,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const { userId } = await auth();
   const body = await req.json();
   const { categorySlug, address, description, baseRate } = body;
 
@@ -23,6 +25,7 @@ export async function POST(req: NextRequest) {
 
   const booking = await prisma.booking.create({
     data: {
+      userId: userId || null,
       categorySlug,
       address,
       description: description || "",

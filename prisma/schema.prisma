@@ -14,6 +14,7 @@ datasource db {
 
 model Booking {
   id             String   @id @default(cuid())
+  userId         String?  // Clerk user id — null for bookings made before login existed
   categorySlug   String
   address        String
   description    String?

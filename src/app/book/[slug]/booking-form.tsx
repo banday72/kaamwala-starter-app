@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Category } from "@/lib/categories";
-import type { Booking } from "@prisma/client";
+import type { Booking } from "@/app/api/bookings/route";
 
 export default function BookingForm({ category }: { category: Category }) {
   const [address, setAddress] = useState("");

@@ -31,6 +31,7 @@ export default function RootLayout({
                 <a href="/" className="hover:underline">Book a worker</a>
                 <Show when="signed-in">
                   <a href="/my-bookings" className="hover:underline">My bookings</a>
+                  <a href="/worker/dashboard" className="hover:underline">Worker dashboard</a>
                 </Show>
                 <Show when="signed-out">
                   <SignInButton mode="modal">
@@ -46,7 +47,7 @@ export default function RootLayout({
                   </SignUpButton>
                 </Show>
                 <Show when="signed-in">
-                  <UserButton />
+                  <UserButton afterSignOutUrl="/" />
                 </Show>
               </nav>
             </div>

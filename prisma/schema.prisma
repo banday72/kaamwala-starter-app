@@ -14,11 +14,24 @@ datasource db {
 
 model Booking {
   id             String   @id @default(cuid())
-  userId         String?  // Clerk user id — null for bookings made before login existed
+  userId         String?  // Clerk user id of the customer who booked
+  workerId       String?  // Clerk user id of the worker who accepted, if any
   categorySlug   String
   address        String
   description    String?
   status         String   @default("requested")
   suggestedPrice Int
   createdAt      DateTime @default(now())
+}
+
+model WorkerProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique // Link to Clerk user
+  skillSlugs         String[] @default([]) // ["plumber", "electrician"] etc
+  currentLat         Float?
+  currentLng         Float?
+  isAvailable        Boolean  @default(false)
+  avgRating          Float    @default(0)
+  totalJobsCompleted Int      @default(0)
+  createdAt          DateTime @default(now())
 }

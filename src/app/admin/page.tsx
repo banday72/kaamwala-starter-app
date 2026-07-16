@@ -1,23 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { categories } from "@/lib/categories";
+import StatusSelect from "./status-select";
 
 export const dynamic = "force-dynamic"; // always fetch fresh data, never cache this page
 
 function categoryName(slug: string) {
   return categories.find((c) => c.slug === slug)?.name || slug;
-}
-
-function statusColor(status: string) {
-  switch (status) {
-    case "completed":
-      return { bg: "#E1F5EE", text: "#085041" };
-    case "in_progress":
-      return { bg: "#E6F1FB", text: "#0C447C" };
-    case "accepted":
-      return { bg: "#FAEEDA", text: "#633806" };
-    default:
-      return { bg: "#F0EFEA", text: "#4B4A45" }; // requested / default
-  }
 }
 
 export default async function AdminPage() {
@@ -49,19 +37,12 @@ export default async function AdminPage() {
               </tr>
             </thead>
             <tbody>
-              {bookings.map((b) => {
-                const sc = statusColor(b.status);
-                return (
+              {bookings.map((b) => (
                   <tr key={b.id} style={{ borderBottom: "1px solid var(--border)" }}>
                     <td className="px-4 py-3" style={{ color: "var(--navy)" }}>{categoryName(b.categorySlug)}</td>
                     <td className="px-4 py-3" style={{ color: "var(--muted)" }}>{b.address}</td>
                     <td className="px-4 py-3">
-                      <span
-                        className="text-xs px-2 py-1 rounded-full"
-                        style={{ background: sc.bg, color: sc.text }}
-                      >
-                        {b.status}
-                      </span>
+                      <StatusSelect id={b.id} status={b.status} />
                     </td>
                     <td className="px-4 py-3 text-right" style={{ color: "var(--navy)" }}>
                       Rs. {b.suggestedPrice.toLocaleString()}
@@ -73,8 +54,7 @@ export default async function AdminPage() {
                       })}
                     </td>
                   </tr>
-                );
-              })}
+                ))}
             </tbody>
           </table>
         </div>

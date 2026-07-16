@@ -22,8 +22,27 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json();
-  const { skillSlugs, isAvailable } = body;
+  const { skillSlugs, isAvailable, currentLat, currentLng } = body;
 
+  // If only updating location, allow that
+  if (currentLat !== undefined && currentLng !== undefined) {
+    const worker = await prisma.workerProfile.upsert({
+      where: { userId },
+      create: {
+        userId,
+        skillSlugs: [],
+        currentLat,
+        currentLng,
+      },
+      update: {
+        currentLat,
+        currentLng,
+      },
+    });
+    return NextResponse.json({ worker });
+  }
+
+  // Full profile update (skills + availability)
   if (!Array.isArray(skillSlugs) || skillSlugs.length === 0) {
     return NextResponse.json(
       { error: "At least one skill must be selected" },

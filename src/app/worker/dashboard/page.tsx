@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { categories } from "@/lib/categories";
 import AvailabilityToggle from "./availability-toggle";
+import AvailableJobs from "./available-jobs";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,9 @@ export default async function WorkerDashboard() {
             </p>
           </div>
         </div>
+
+        {/* Available Jobs */}
+        <AvailableJobs />
       </div>
     </div>
   );

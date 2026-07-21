@@ -54,7 +54,7 @@ export default function RootLayout({
           </header>
           <main className="flex-1">{children}</main>
           <footer className="border-t py-6 text-center text-xs" style={{ borderColor: "var(--border)", color: "var(--muted)" }}>
-            KaamWala — demo build. Not yet processing real payments.
+        
           </footer>
         </body>
       </html>

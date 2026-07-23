@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kaamwala-starter-app.vercel.app/sitemap.xml
